@@ -33,4 +33,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_dependency 'httparty', '~> 0.17.0'
   spec.add_dependency 'open_uri_redirections', '~> 0.2.1'
+  spec.add_dependency 'pry', '~> 0.12.2'
 end

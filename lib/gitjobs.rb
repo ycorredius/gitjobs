@@ -1,6 +1,3 @@
 require "gitjobs/version"
+require "gitjobs/cli"
 
-module Gitjobs
-  class Error < StandardError; end
-  # Your code goes here...
-end
