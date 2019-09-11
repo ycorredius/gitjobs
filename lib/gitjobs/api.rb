@@ -3,11 +3,13 @@ require 'pry'
 require 'json'
 
 class Api
-    attr_reader :posts
+    attr_reader :posts, :response
+    
     include HTTParty
-    # binding.pry
+    
     @@all 
-    def initialize
+    def initialize(search)
+        @response = HTTParty.get("https://jobs.github.com/positions.json?description=#{search}&page=1",format: :json)
         @posts = []
     end
 
@@ -15,8 +17,7 @@ class Api
         @@all << @posts
     end
 
-    def pull_post
-        response = HTTParty.get('https://jobs.github.com/positions.json?description=ruby&page=1',format: :json)
+    def self.pull_post
         response.each do |post| 
             listing = {
                 title: post['title'],                    
