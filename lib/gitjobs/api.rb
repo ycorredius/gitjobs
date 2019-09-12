@@ -1,23 +1,17 @@
 require 'httparty'
-require 'pry'
 require 'json'
 
 class Api
-    attr_reader :posts, :response
-    
+    attr_reader :posts
     include HTTParty
-    
-    @@all 
-    def initialize(search)
-        @response = HTTParty.get("https://jobs.github.com/positions.json?description=#{search}&page=1",format: :json)
+
+    def initialize(pull)
+        @pull = pull
         @posts = []
     end
 
-    def self.save 
-        @@all << @posts
-    end
-
-    def self.pull_post
+    def new_pull(search)
+        response = HTTParty.get("https://jobs.github.com/positions.json?description=#{search}&page=1",format: :json)
         response.each do |post| 
             listing = {
                 title: post['title'],                    
@@ -26,9 +20,10 @@ class Api
                 description: post['description'],
                 url: post['company_url']
             }
-            @posts << listing
+            @posts.push(listing)
         end
-        binding.pry
+        self.posts
    end
+   
 end
 
