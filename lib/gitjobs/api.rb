@@ -5,8 +5,7 @@ class Api
     attr_reader :posts
     include HTTParty
 
-    def initialize(pull)
-        @pull = pull
+    def initialize
         @posts = []
     end
 
