@@ -26,42 +26,54 @@ class Cli
         display_menu
     end
 
-    def display_menu
-        while true  
+    def display_menu   
             puts "What would you like to do?"
-            puts " -Search new job"
+            puts "1-Search new job"
             puts "2-Find previous search"
             puts "3-Exit or quit"
             choose = gets
+            system('clear')
             choice(choose.strip)
-        end
     end
 
     def choice(choice) 
-        binding.pry
-        case choice 
-        when choice == 'search' 
+        if choice == '1' 
             puts "Enter a search: "
-            job = Jobs.find_or_create()
-            display_jobs(job) if job
-        when 2
-            job = Jobs.find(input.strip)
+            job = Jobs.find_or_create(gets)
+            if !job.post.empty?
+                display_jobs(job) 
+            else
+                system('clear')
+                puts "No results!"
+                system('clear')
+            end
+            binding.pry
+            display_menu
+        elsif choice == "2"
+            job = Jobs.find(gets)
             display_jobs(job)
-        when 3
-            system('exit!')
+            display_menu
+        elsif choice == "3"
+            puts "Goodbye!"
+            false
         else
             puts "Invalid input. Pleas try again"
+            display_menu
         end 
     end
 
     def display_jobs(job_obj)
-        job_obj.post.each do |job|
-            puts job[:title]
-            puts "Company: " + job[:company]
-            puts "Job: " + job[:location]
-            job[:decription].each do |line|
-                binding.pry 
+        if job_obj
+            job_obj.post.each do |job|
+                puts "=============================================================================\n"
+                puts job[:title]
+                puts "Company: " + job[:company]
+                puts "Job: " + job[:location]
+                puts "Link to posting: " + "#{job[:url]}"
+                puts "=============================================================================\n"
             end
+        else    
+            puts "You haven't searched for that yet.\n"
         end
     end
 end

@@ -30,7 +30,7 @@ class Jobs
         all.find{|post| post.name == input}
     end
 
-    def find_or_create(input)
+    def self.find_or_create(input)
         find(input) || create(input)
     end 
 end
