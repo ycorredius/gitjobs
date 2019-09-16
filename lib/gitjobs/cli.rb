@@ -47,9 +47,9 @@ class Cli
                 puts "No results!"
                 system('clear')
             end
-            binding.pry
             display_menu
         elsif choice == "2"
+            puts "Enter a search: "
             job = Jobs.find(gets)
             display_jobs(job)
             display_menu
