@@ -31,6 +31,12 @@ class Jobs
     end
 
     def self.find_or_create(input)
-        find(input) || create(input)
+        binding.pry
+        if (input.chomp).match?(/[0-9]/)
+           puts "Invalid!" 
+        else
+            binding.pry
+            find(input) || create(input)
+        end
     end 
 end

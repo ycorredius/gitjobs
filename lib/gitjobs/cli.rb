@@ -1,5 +1,5 @@
-require_relative './api'
-require_relative './jobs'
+# require_relative './api'
+# require_relative './jobs'
 
 class Cli
     def start
@@ -40,11 +40,13 @@ class Cli
         if choice == '1' 
             puts "Enter a search: "
             job = Jobs.find_or_create(gets)
-            if !job.post.empty?
+            binding.pry
+            unless job
                 display_jobs(job) 
             else
                 system('clear')
                 puts "No results!"
+                sleep 0.75
                 system('clear')
             end
             display_menu
@@ -55,7 +57,6 @@ class Cli
             display_menu
         elsif choice == "3"
             puts "Goodbye!"
-            false
         else
             puts "Invalid input. Pleas try again"
             display_menu
@@ -68,7 +69,8 @@ class Cli
                 puts "=============================================================================\n"
                 puts job[:title]
                 puts "Company: " + job[:company]
-                puts "Job: " + job[:location]
+                puts "Location: " + job[:location]
+                # puts "Description: " + job[:description]
                 puts "Link to posting: " + "#{job[:url]}"
                 puts "=============================================================================\n"
             end
